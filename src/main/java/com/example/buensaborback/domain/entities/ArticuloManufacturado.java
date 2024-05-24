@@ -6,6 +6,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.Audited;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class ArticuloManufacturado extends Articulo {
 
             // Se calculan los stocks disponibles de cada ingrediente por la cantidad que se vaya a usar de cada uno
             List<Integer> stocksPorCantidad = articuloManufacturadoDetalles.stream().map(
-                    detalle -> (int) (detalle.getArticuloInsumo().getStocksInsumo().stream().filter(stock -> stock.getSucursal().getId() == idSucursal).findFirst().get().getStockActual() / detalle.getCantidad()
+                    detalle -> (int) (detalle.getArticuloInsumo().getStocksInsumo().stream().filter(stock -> Objects.equals(stock.getSucursal().getId(), idSucursal)).findFirst().get().getStockActual() / detalle.getCantidad()
                     )
             ).toList();
 
